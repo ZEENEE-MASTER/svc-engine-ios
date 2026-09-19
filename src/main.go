@@ -72,7 +72,11 @@ func realMain() {
 		runtime.LockOSThread()
 		sdl.GLSetAttribute(sdl.GL_CONTEXT_PROFILE_MASK, sdl.GL_CONTEXT_PROFILE_ES)
 		sdl.GLSetAttribute(sdl.GL_CONTEXT_MAJOR_VERSION, 3)
-		sdl.GLSetAttribute(sdl.GL_CONTEXT_MINOR_VERSION, 2)
+		if runtime.GOOS == "ios" {
+			sdl.GLSetAttribute(sdl.GL_CONTEXT_MINOR_VERSION, 0)
+		} else {
+			sdl.GLSetAttribute(sdl.GL_CONTEXT_MINOR_VERSION, 2)
+		}
 		sdl.GLSetAttribute(sdl.GL_DOUBLEBUFFER, 1)
 		sdl.GLSetAttribute(sdl.GL_ALPHA_SIZE, 0)
 		sdl.GLSetAttribute(sdl.GL_DEPTH_SIZE, 24)

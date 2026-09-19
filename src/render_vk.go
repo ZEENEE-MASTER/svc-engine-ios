@@ -1,4 +1,4 @@
-//go:build !kinc && !android && !ios && !ios
+//go:build !kinc && !android && !ios && !ios && !ios && !ios
 
 package main
 
