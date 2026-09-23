@@ -1,4 +1,4 @@
-//go:build darwin && !ios && !ios && !ios && !ios
+//go:build darwin && !ios && !ios && !ios && !ios && !ios
 
 package main
 
