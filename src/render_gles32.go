@@ -2,7 +2,7 @@
 // for GLES 3.2 which is the main version that runs on modern
 // Android (ARM). Work adapted from Leon Kasovan
 
-//go:build android || ios || ios || ios || ios || ios || ios
+//go:build android || ios || ios || ios || ios || ios || ios || ios || ios
 
 package main
 
@@ -128,6 +128,12 @@ func (r *Renderer_GLES32) compileShader(shaderType uint32, src string) (uint32, 
 	if !strings.HasPrefix(strings.TrimSpace(src), "#version") {
 		// Anchor to 320 es for best feature compatibility
 		header := "#version 320 es\n"
+		if runtime.GOOS == "ios" {
+			header = "#version 300 es\n"
+		}
+		if runtime.GOOS == "ios" {
+			header = "#version 300 es\n"
+		}
 		if runtime.GOOS == "ios" {
 			header = "#version 300 es\n"
 		}
