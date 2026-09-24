@@ -67,6 +67,9 @@ func (s *System) newWindow(w, h int) (*Window, error) {
 		// 3. CALCULATION
 		_, forceWindowed := sys.cmdFlags["-windowed"]
 		fullscreen := s.cfg.Video.Fullscreen && !forceWindowed
+		if runtime.GOOS == "ios" {
+			fullscreen = true
+		}
 
 		// Override default sizes if config specifies
 		if sys.cfg.Video.WindowWidth > 0 || sys.cfg.Video.WindowHeight > 0 {
