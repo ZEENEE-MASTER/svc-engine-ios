@@ -1514,12 +1514,6 @@ func (r *Renderer_VK) NewVulkanDevice(appInfo *vk.ApplicationInfo, window uintpt
 	// 	instanceCreateInfo.EnabledExtensionCount = uint32(len(instanceExtensions))
 	// 	instanceCreateInfo.Flags = vk.InstanceCreateFlags(vk.InstanceCreateEnumeratePortabilityBit)
 	// }
-	if runtime.GOOS == "ios" {
-		instanceExtensions = append(instanceExtensions, vk.KhrPortabilityEnumerationExtensionName+"\x00")
-		instanceCreateInfo.PpEnabledExtensionNames = instanceExtensions
-		instanceCreateInfo.EnabledExtensionCount = uint32(len(instanceExtensions))
-		instanceCreateInfo.Flags = vk.InstanceCreateFlags(vk.InstanceCreateEnumeratePortabilityBit)
-	}
 	vkDebug = sys.cfg.Video.RendererDebugMode
 	if vkDebug {
 		if r.checkValidationLayerSupport() {
@@ -1585,6 +1579,14 @@ func (r *Renderer_VK) NewVulkanDevice(appInfo *vk.ApplicationInfo, window uintpt
 			r.gpuIndex = uint32(i)
 			break
 		}
+	}
+	if len(r.gpuDevices) > 0 && r.maxAnisotropy == 0 {
+		var gp vk.PhysicalDeviceProperties
+		vk.GetPhysicalDeviceProperties(r.gpuDevices[r.gpuIndex], &gp)
+		gp.Deref()
+		r.maxAnisotropy = gp.Limits.MaxSamplerAnisotropy
+		r.minUniformBufferOffsetAlignment = uint32(gp.Limits.MinUniformBufferOffsetAlignment)
+		r.maxImageArrayLayers = uint32(gp.Limits.MaxImageArrayLayers)
 	}
 	queueCreateInfos := []vk.DeviceQueueCreateInfo{{
 		SType:            vk.StructureTypeDeviceQueueCreateInfo,
