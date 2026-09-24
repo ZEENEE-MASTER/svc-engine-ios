@@ -1,4 +1,4 @@
-//go:build !kinc && !android && !ios && !ios && !ios && !ios && !ios && !ios && !ios && !ios
+//go:build !kinc && (!android || ios)
 
 package main
 
@@ -1489,6 +1489,11 @@ func (r *Renderer_VK) DebugInfo() string {
 }
 
 func (r *Renderer_VK) NewVulkanDevice(appInfo *vk.ApplicationInfo, window uintptr) error {
+	if runtime.GOOS == "ios" {
+		if err := sdl.VulkanLoadLibrary(""); err != nil {
+			return fmt.Errorf("VulkanLoadLibrary failed: %w", err)
+		}
+	}
 	// create a Vulkan instance.
 	instanceExtensions := sys.window.Window.VulkanGetInstanceExtensions()
 	for i := range instanceExtensions {
@@ -1509,6 +1514,12 @@ func (r *Renderer_VK) NewVulkanDevice(appInfo *vk.ApplicationInfo, window uintpt
 	// 	instanceCreateInfo.EnabledExtensionCount = uint32(len(instanceExtensions))
 	// 	instanceCreateInfo.Flags = vk.InstanceCreateFlags(vk.InstanceCreateEnumeratePortabilityBit)
 	// }
+	if runtime.GOOS == "ios" {
+		instanceExtensions = append(instanceExtensions, vk.KhrPortabilityEnumerationExtensionName+"\x00")
+		instanceCreateInfo.PpEnabledExtensionNames = instanceExtensions
+		instanceCreateInfo.EnabledExtensionCount = uint32(len(instanceExtensions))
+		instanceCreateInfo.Flags = vk.InstanceCreateFlags(vk.InstanceCreateEnumeratePortabilityBit)
+	}
 	vkDebug = sys.cfg.Video.RendererDebugMode
 	if vkDebug {
 		if r.checkValidationLayerSupport() {

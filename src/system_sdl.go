@@ -24,7 +24,7 @@ func (s *System) newWindow(w, h int) (*Window, error) {
 	var w2, h2 int32 = int32(w), int32(h)
 	var fullscreen bool
 
-	if runtime.GOOS == "android" || runtime.GOOS == "ios" {
+	if runtime.GOOS == "android" || (runtime.GOOS == "ios" && s.cfg.Video.RenderMode != "Vulkan 1.3") {
 		// On Android, we MUST use 0,0 or SDL ignores it anyway,
 		// but flags are the critical part.
 		window, err = sdl.CreateWindow(

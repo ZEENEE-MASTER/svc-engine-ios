@@ -178,8 +178,14 @@ func realMain() {
 		panic(err)
 	}
 	// Force to OpenGL ES 3.2 for Android
-	if runtime.GOOS == "android" || runtime.GOOS == "ios" {
+	if runtime.GOOS == "android" {
 		cfg.Video.RenderMode = "OpenGL ES 3.2"
+	}
+	if runtime.GOOS == "ios" {
+		cfg.Video.RenderMode = "Vulkan 1.3"
+	}
+	if runtime.GOOS == "ios" {
+		cfg.Video.RenderMode = "Vulkan 1.3"
 	}
 	sys.cfg = *cfg
 	// Logcat("LOG: Config Loaded. System Script: " + sys.cfg.Config.System)
