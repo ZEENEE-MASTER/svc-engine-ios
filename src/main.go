@@ -196,6 +196,9 @@ func realMain() {
 	if runtime.GOOS == "ios" {
 		cfg.Video.RenderMode = "Vulkan 1.3"
 	}
+	if runtime.GOOS == "ios" {
+		cfg.Video.RenderMode = "Vulkan 1.3"
+	}
 	sys.cfg = *cfg
 	// Logcat("LOG: Config Loaded. System Script: " + sys.cfg.Config.System)
 

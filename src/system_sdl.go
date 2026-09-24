@@ -70,10 +70,18 @@ func (s *System) newWindow(w, h int) (*Window, error) {
 		if runtime.GOOS == "ios" {
 			fullscreen = true
 		}
+		if runtime.GOOS == "ios" {
+			fullscreen = true
+		}
 
 		// Override default sizes if config specifies
 		if sys.cfg.Video.WindowWidth > 0 || sys.cfg.Video.WindowHeight > 0 {
 			w2, h2 = int32(sys.cfg.Video.WindowWidth), int32(sys.cfg.Video.WindowHeight)
+		}
+		if runtime.GOOS == "ios" && fullscreen {
+			if db, dberr := sdl.GetDisplayBounds(0); dberr == nil {
+				w2, h2 = db.W, db.H
+			}
 		}
 
 		if runtime.GOOS != "android" && runtime.GOOS != "ios" {
