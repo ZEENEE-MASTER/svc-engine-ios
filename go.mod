@@ -9,7 +9,7 @@ replace github.com/gopxl/beep/v2 => github.com/gopxl/beep/v2 v2.1.1-0.2024092113
 replace github.com/leonkasovan/gl => github.com/ZEENEE-MASTER/svc-gl-ios v0.0.1-ios
 
 require (
-	github.com/Eiton/vulkan v0.0.0-20251125114215-6585a2a8590b
+	github.com/Eiton/vulkan v0.0.0-20260919053014-1dd61c556d3f
 	github.com/flopp/go-findfont v0.1.0
 	github.com/go-gl/gl v0.0.0-20231021071112-07e5d0ea2e71
 	github.com/go-gl/mathgl v1.0.0
