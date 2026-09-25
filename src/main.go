@@ -80,6 +80,9 @@ func realMain() {
 		sdl.GLSetAttribute(sdl.GL_DOUBLEBUFFER, 1)
 		sdl.GLSetAttribute(sdl.GL_ALPHA_SIZE, 0)
 		sdl.GLSetAttribute(sdl.GL_DEPTH_SIZE, 24)
+		if runtime.GOOS == "ios" {
+			sdl.SetHint(sdl.HINT_ORIENTATIONS, "LandscapeLeft LandscapeRight")
+		}
 		// sdl.SetHint("SDL_VIDEO_EXTERNAL_CONTEXT", "0")
 		// sdl.SetHint("SDL_HIDAPI_IGNORE_DEVICES", "1")
 		// sdl.SetHint("SDL_JOYSTICK_ALLOW_BACKGROUND_EVENTS", "1")
@@ -180,6 +183,9 @@ func realMain() {
 	// Force to OpenGL ES 3.2 for Android
 	if runtime.GOOS == "android" {
 		cfg.Video.RenderMode = "OpenGL ES 3.2"
+	}
+	if runtime.GOOS == "ios" {
+		cfg.Video.RenderMode = "Vulkan 1.3"
 	}
 	if runtime.GOOS == "ios" {
 		cfg.Video.RenderMode = "Vulkan 1.3"
