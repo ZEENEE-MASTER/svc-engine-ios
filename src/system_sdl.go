@@ -78,11 +78,6 @@ func (s *System) newWindow(w, h int) (*Window, error) {
 		if runtime.GOOS == "ios" && fullscreen {
 			w2, h2 = 0, 0
 		}
-		if runtime.GOOS == "ios" && fullscreen {
-			if db, dberr := sdl.GetDisplayBounds(0); dberr == nil {
-				w2, h2 = db.W, db.H
-			}
-		}
 
 		if runtime.GOOS != "android" && runtime.GOOS != "ios" {
 			x, y = (desktopW-w2)/2, (desktopH-h2)/2
