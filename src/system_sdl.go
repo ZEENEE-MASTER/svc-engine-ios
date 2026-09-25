@@ -76,7 +76,9 @@ func (s *System) newWindow(w, h int) (*Window, error) {
 			w2, h2 = int32(sys.cfg.Video.WindowWidth), int32(sys.cfg.Video.WindowHeight)
 		}
 		if runtime.GOOS == "ios" && fullscreen {
-			w2, h2 = 0, 0
+			if sw, sh := svcScreenPoints(); sw > 0 && sh > 0 {
+				w2, h2 = sw, sh
+			}
 		}
 
 		if runtime.GOOS != "android" && runtime.GOOS != "ios" {
