@@ -152,6 +152,10 @@ func (s *System) newWindow(w, h int) (*Window, error) {
 		}
 	}
 
+	if runtime.GOOS == "ios" {
+		ww, hh := window.GetSize()
+		Logcat(fmt.Sprintf("iOS window: %dx%d fullscreen=%v w2=%d h2=%d", ww, hh, fullscreen, w2, h2))
+	}
 	for i := range input.controllers {
 		input.controllerstate[i] = &ControllerState{Buttons: make(map[sdl.GameControllerButton]byte)}
 	}
