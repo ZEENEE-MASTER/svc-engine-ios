@@ -156,6 +156,12 @@ func (s *System) newWindow(w, h int) (*Window, error) {
 		ww, hh := window.GetSize()
 		Logcat(fmt.Sprintf("iOS window: %dx%d fullscreen=%v w2=%d h2=%d", ww, hh, fullscreen, w2, h2))
 	}
+	if runtime.GOOS == "ios" {
+		asw, ash := svcScreenPoints()
+		Logcat(fmt.Sprintf("iOS size audit: screen=%dx%d cfg=%dx%d", asw, ash, int32(sys.cfg.Video.WindowWidth), int32(sys.cfg.Video.WindowHeight)))
+		ww, hh := window.GetSize()
+		Logcat(fmt.Sprintf("iOS window: %dx%d fullscreen=%v w2=%d h2=%d", ww, hh, fullscreen, w2, h2))
+	}
 	for i := range input.controllers {
 		input.controllerstate[i] = &ControllerState{Buttons: make(map[sdl.GameControllerButton]byte)}
 	}
